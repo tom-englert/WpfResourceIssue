@@ -1,23 +1,25 @@
 ﻿namespace Application
 {
     using System;
+    using System.ComponentModel.Composition.Hosting;
     using System.IO;
     using System.Linq;
     using System.Reflection;
     using System.Windows;
-
-    using TomsToolbox.Desktop;
-    using TomsToolbox.Desktop.Composition;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow
     {
-        private readonly CompositionHost _compositionHost = new CompositionHost();
+        private readonly AggregateCatalog _catalog = new AggregateCatalog();
+        private readonly CompositionContainer _container;
+
 
         public MainWindow()
         {
+            _container = new CompositionContainer(_catalog);
+
             InitializeComponent();
 
             Loaded += Self_Loaded;
@@ -25,21 +27,28 @@
 
         private void Self_Loaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            var applicationDirectory = GetType().Assembly.GetAssemblyDirectory();
+            var applicationDirectory = new DirectoryInfo(Path.GetDirectoryName(GetType().Assembly.Location));
 
-            var ModuleDirectories = applicationDirectory.EnumerateDirectories("Module*");
+            var moduleDirectories = applicationDirectory.EnumerateDirectories("Module*");
 
             // uncomment to only load moudle1:
-            // ModuleDirectories = ModuleDirectories.Take(1);
+            // moduleDirectories = moduleDirectories.Take(1);
 
-            var ModuleAssemblies = ModuleDirectories
+            // uncomment to load modules in reverse order:
+            // moduleDirectories = moduleDirectories.Reverse()
+
+            var moduleAssemblies = moduleDirectories
                 .SelectMany(dir => dir.EnumerateFiles("*.dll"))
                 .Select(file => Assembly.LoadFile(file.FullName))
+                .Select(path => new AssemblyCatalog(path))
                 .ToArray();
 
-            _compositionHost.AddCatalog(ModuleAssemblies);
+            foreach (var assemblyCatalog in moduleAssemblies)
+            {
+                _catalog.Catalogs.Add(assemblyCatalog);
+            }
 
-            var visualExports = _compositionHost.GetExports<FrameworkElement>();
+            var visualExports = _container.GetExports<FrameworkElement>();
 
             var visuals = visualExports.Select(item => item.Value).ToArray();
 
@@ -50,7 +59,8 @@
         {
             base.OnClosed(e);
 
-            _compositionHost.Dispose();
+            _catalog.Dispose();
+            _container.Dispose();
         }
     }
 }
