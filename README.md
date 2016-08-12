@@ -16,3 +16,7 @@ Even worse if resources from the `StyleLibrary` are referenced by `StaticResourc
 
 This scenario happens if customer buys application and module1, and later also buys module2. 
 After installing module2, module1 stops working properly.
+
+A real live example is Visual Studio, with two extensions installed, that both reference the same library.
+
+![sample](https://github.com/tom-englert/WpfResourceIssue/blob/master/sample.png)
