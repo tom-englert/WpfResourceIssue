@@ -1,5 +1,6 @@
 # Wpf Resource Issue
-A sample project to demonstrate an issue with WPF resources
+
+A sample project to demonstrate an issue with WPF resources. The issue has been reported on [Microsoft Connect](https://connect.microsoft.com/VisualStudio/feedback/details/2993889/wpf-fails-to-load-resources-if-two-versions-of-the-same-assembly-are-loded)
 
 This is a sample of a very simple modular application. 
 It's only used to demonstrate an issue with WPF resources, so the code is kept very simple and does not follow any architectural patterns. 
