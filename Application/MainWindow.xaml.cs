@@ -40,7 +40,7 @@
             var moduleAssemblies = moduleDirectories
                 .SelectMany(dir => dir.EnumerateFiles("*.dll"))
                 .Select(file => Assembly.LoadFile(file.FullName))
-                .Select(path => new AssemblyCatalog(path))
+                .Select(assembly => new AssemblyCatalog(assembly))
                 .ToArray();
 
             foreach (var assemblyCatalog in moduleAssemblies)

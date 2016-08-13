@@ -5,6 +5,8 @@
 
   <SolidColorBrush x:Key="{x:Static local:ResourceKeys.CorporateColor}" Color="Blue" />
 
+  <SolidColorBrush x:Key="{x:Type local:KeyClass}" Color="Green" />
+
   <Style TargetType="FrameworkElement"  x:Key="{x:Static local:ResourceKeys.CorporateStyle}" >
     <Setter Property="HorizontalAlignment" Value="Center"/>
     <Setter Property="VerticalAlignment" Value="Center"/>

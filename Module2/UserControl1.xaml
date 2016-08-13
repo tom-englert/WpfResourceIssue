@@ -6,7 +6,7 @@
              xmlns:StyleLibrary="clr-namespace:StyleLibrary;assembly=StyleLibrary">
   <Grid>
     <StyleLibrary:Control1/>
-
-    <TextBlock Text="Module2" Style="{DynamicResource {x:Static StyleLibrary:ResourceKeys.CorporateStyle}}"/>
+    <TextBlock Text="Module2" Style="{DynamicResource {x:Static StyleLibrary:ResourceKeys.CorporateStyle}}" />
+    <TextBlock Text="Background with type key" Background="{DynamicResource {x:Type StyleLibrary:KeyClass}}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
   </Grid>
 </UserControl>
