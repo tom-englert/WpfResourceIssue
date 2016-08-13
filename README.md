@@ -25,21 +25,21 @@ After installing module2, module1 stops working properly.
 
 A real live example is Visual Studio, with two extensions installed, that both reference the same library.
 
-##### Module dependencies:
+### Module dependencies:
 
 ![sample](https://github.com/tom-englert/WpfResourceIssue/blob/master/sample.png)
 
-##### Loading only module 1:
+### Loading only module 1:
 
 ![Module1Only](https://github.com/tom-englert/WpfResourceIssue/blob/master/Module1Only.png)
 
-##### Loading both modules:
+### Loading both modules:
 Control1 (the background) can still find it's style, as well as the background of the lower right text block, that uses a type as it's key.
 However the text block "Module 1" has lost it's style.
 
 ![Module1Module2](https://github.com/tom-englert/WpfResourceIssue/blob/master/Module1Module2.png)
 
-#####  modules in reverse order:
+###  Modules in reverse order:
 Now the text block "Module 2" has lost it's style.
 
 ![Module2Module1](https://github.com/tom-englert/WpfResourceIssue/blob/master/Module2Module1.png)
