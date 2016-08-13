@@ -35,7 +35,7 @@
             // moduleDirectories = moduleDirectories.Take(1);
 
             // uncomment to load modules in reverse order:
-            // moduleDirectories = moduleDirectories.Reverse()
+            // moduleDirectories = moduleDirectories.Reverse();
 
             var moduleAssemblies = moduleDirectories
                 .SelectMany(dir => dir.EnumerateFiles("*.dll"))
