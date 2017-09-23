@@ -1,11 +1,14 @@
 ﻿namespace Application
 {
     using System;
+    using System.Collections.ObjectModel;
     using System.ComponentModel.Composition.Hosting;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Reflection;
     using System.Windows;
+    using System.Windows.Controls;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -14,7 +17,7 @@
     {
         private readonly AggregateCatalog _catalog = new AggregateCatalog();
         private readonly CompositionContainer _container;
-
+        private readonly ObservableCollection<FrameworkElement> _visuals = new ObservableCollection<FrameworkElement>();
 
         public MainWindow()
         {
@@ -22,24 +25,30 @@
 
             InitializeComponent();
 
-            Loaded += Self_Loaded;
+            ItemsControl.ItemsSource = _visuals;
         }
 
-        private void Self_Loaded(object sender, RoutedEventArgs routedEventArgs)
+        protected override void OnClosed(EventArgs e)
         {
+            base.OnClosed(e);
+
+            _catalog.Dispose();
+            _container.Dispose();
+        }
+
+        private void Module_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            var checkBox = (CheckBox)sender;
+            var folder = (string)checkBox.Tag;
+
+            checkBox.IsEnabled = false;
+
             var applicationDirectory = new DirectoryInfo(Path.GetDirectoryName(GetType().Assembly.Location));
+            var directory = applicationDirectory.GetDirectories(folder);
 
-            var moduleDirectories = applicationDirectory.EnumerateDirectories("Module*");
-
-            // uncomment to only load moudle1:
-            // moduleDirectories = moduleDirectories.Take(1);
-
-            // uncomment to load modules in reverse order:
-            // moduleDirectories = moduleDirectories.Reverse();
-
-            var moduleAssemblies = moduleDirectories
+            var moduleAssemblies = directory
                 .SelectMany(dir => dir.EnumerateFiles("*.dll"))
-                .Select(file => Assembly.LoadFile(file.FullName))
+                .Select(file => Assembly.LoadFrom(file.FullName))
                 .Select(assembly => new AssemblyCatalog(assembly))
                 .ToArray();
 
@@ -50,17 +59,13 @@
 
             var visualExports = _container.GetExports<FrameworkElement>();
 
-            var visuals = visualExports.Select(item => item.Value).ToArray();
+            foreach (var export in visualExports)
+            {
+                var f = export.Value;
 
-            ItemsControl.ItemsSource = visuals;
-        }
-
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-
-            _catalog.Dispose();
-            _container.Dispose();
+                if (!_visuals.Contains(f))
+                    _visuals.Add(f);
+            }
         }
     }
 }

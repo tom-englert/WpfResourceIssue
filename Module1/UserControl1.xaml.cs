@@ -7,7 +7,6 @@
     /// Interaction logic for UserControl1.xaml
     /// </summary>
     [Export(typeof(FrameworkElement))]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
     public partial class UserControl1
     {
         public UserControl1()

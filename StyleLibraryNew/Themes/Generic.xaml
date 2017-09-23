@@ -1,18 +1,19 @@
 <ResourceDictionary
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:local="clr-namespace:StyleLibrary">
+  xmlns:local="clr-namespace:StyleLibrary"
+  xmlns:styles="clr-namespace:TomsToolbox.Wpf.Styles;assembly=TomsToolbox.Wpf.Styles">
 
   <SolidColorBrush x:Key="{x:Static local:ResourceKeys.CorporateColor}" Color="Blue" />
 
   <SolidColorBrush x:Key="{x:Type local:KeyClass}" Color="Green" />
 
-  <Style TargetType="FrameworkElement"  x:Key="{x:Static local:ResourceKeys.CorporateStyle}" >
-    <Setter Property="HorizontalAlignment" Value="Center"/>
-    <Setter Property="VerticalAlignment" Value="Center"/>
-    <Setter Property="TextElement.Foreground" Value="Blue"/>
-    <Setter Property="TextElement.FontSize" Value="24"/>
-    <Setter Property="TextElement.FontWeight" Value="Bold"/>
+  <Style TargetType="FrameworkElement" x:Key="{x:Static local:ResourceKeys.CorporateStyle}">
+    <Setter Property="HorizontalAlignment" Value="Center" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="TextElement.Foreground" Value="Blue" />
+    <Setter Property="TextElement.FontSize" Value="24" />
+    <Setter Property="TextElement.FontWeight" Value="Bold" />
   </Style>
 
   <Style TargetType="{x:Type local:Control1}">
@@ -26,11 +27,14 @@
           <Border Background="{TemplateBinding Background}"
                   BorderBrush="{TemplateBinding BorderBrush}"
                   BorderThickness="{TemplateBinding BorderThickness}">
-            <TextBlock Text="Style library v 1.0.1.0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold">
-              <TextBlock.LayoutTransform>
-                <RotateTransform Angle="-15"/>
-              </TextBlock.LayoutTransform>
-            </TextBlock>
+            <Grid>
+              <TextBlock Text="Style library v 1.0.1.0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold">
+                <TextBlock.LayoutTransform>
+                  <RotateTransform Angle="-15" />
+                </TextBlock.LayoutTransform>
+              </TextBlock>
+              <DataGrid Height="100" Margin="10" Background="Transparent" ItemsSource="{Binding Source={x:Static local:Item.Data}}" Style="{StaticResource {x:Static styles:ResourceKeys.DataGridStyle}}" />
+            </Grid>
           </Border>
         </ControlTemplate>
       </Setter.Value>
