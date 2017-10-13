@@ -1,3 +1,5 @@
+Test
+
 # Wpf Resource Issue
 
 A sample project to demonstrate an issue with WPF resources. The issue has been reported on [Microsoft Connect](https://connect.microsoft.com/VisualStudio/feedback/details/2993889/wpf-fails-to-load-resources-if-two-versions-of-the-same-assembly-are-loded)
