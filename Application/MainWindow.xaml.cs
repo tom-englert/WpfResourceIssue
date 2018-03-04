@@ -38,6 +38,9 @@
 
         private void Module_CheckedChanged(object sender, RoutedEventArgs e)
         {
+            // does not work if set here:
+            AppContext.SetSwitch("Switch.System.Windows.Baml2006.AppendLocalAssemblyVersionForSourceUri", true);
+
             var checkBox = (CheckBox)sender;
             var folder = (string)checkBox.Tag;
 
