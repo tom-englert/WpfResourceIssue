@@ -25,6 +25,9 @@
 
             InitializeComponent();
 
+            // does not work if set here:
+            AppContext.SetSwitch("Switch.System.Windows.Baml2006.AppendLocalAssemblyVersionForSourceUri", true);
+
             ItemsControl.ItemsSource = _visuals;
         }
 
